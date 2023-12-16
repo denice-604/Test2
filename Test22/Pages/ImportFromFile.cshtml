@@ -1,0 +1,17 @@
+﻿@page
+@model TestXls.Pages.ImportFromFileModel
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Import From File</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="xmlFile" accept=".xls" /> <!-- Поле для выбора файла XML -->
+
+        <button type="submit" asp-page-handler="Upload">Выгрузить</button> <!-- Кнопка "выгрузить" -->
+    </form>
+</body>
+</html>

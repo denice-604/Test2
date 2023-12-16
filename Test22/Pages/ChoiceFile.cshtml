@@ -1,0 +1,18 @@
+﻿@page
+@model Test22.Pages.ChoiceFileModel
+
+
+<form asp-page="SelectedRecords" method="post">
+    <label for="SelectedName">Выберите название:</label>
+    <select name="SelectedName">
+        <option value="">Выберите...</option>
+        
+        @foreach (var item in Model.Files)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+
+    </select>
+    <button type="submit" asp-page-handler="Choise">Показать записи</button>
+</form>
+

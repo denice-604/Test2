@@ -1,0 +1,72 @@
+﻿@page
+@model Test22.Pages.PrintElementsModel
+
+@if (Model.classes != null)
+{
+    <table border="2" >
+    <thead>
+            <tr border="2">
+                <th style="border: 1px solid black;" rowspan="2"> Б/СЧ </th>
+                <th style="border: 1px solid black;" colspan="2">ВХОДЯЩЕЕ САЛЬДО</th>
+                <th style="border: 1px solid black;" colspan="2">ДОХОДЫ</th>
+                <th style="border: 1px solid black;" colspan="2">ИСХОДЯЩЕЕ САЛЬДО</th>
+    </tr>
+
+    <tr>
+                <th style="border: 1px solid black;">Актив</th>
+                <th style="border: 1px solid black;">Пассив</th>
+                <th style="border: 1px solid black;">Дебет</th>
+                <th style="border: 1px solid black;">Кредит</th>
+                <th style="border: 1px solid black;">Актив</th>
+                <th style="border: 1px solid black;">Пассив</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var clas in Model.classes)  @*проходимся по всем классам что имеют отношение к выбранному файлу*@
+        {
+            <tr>
+                <td colspan="7"> @clas.Name </td>   @*Выводим файл*@
+            </tr>
+
+            @foreach (var acc in Model.acco.Where(element => element.ClassId == clas.Id))   @*проходимся и выводим все строки
+                                                                                            которые принадлежат данному классу*@
+            {
+                <tr>
+                        <td style="border: 1px solid black;">@acc.Bank</td>
+                        <td style="border: 1px solid black;">@acc.IncomingBalanceActive</td>
+                        <td style="border: 1px solid black;">@acc.IncomingBalancePassive</td>
+                        <td style="border: 1px solid black;">@acc.DebitTurnover</td>
+                        <td style="border: 1px solid black;">@acc.CreditTurnover</td>
+                        <td style="border: 1px solid black;">@acc.InitialBalanceActive</td>
+                        <td style="border: 1px solid black;">@acc.InitialBalancePassive</td>
+                </tr>
+            }
+            @if(true)  @*Вывод итогов по классу*@
+            {
+               <tr>
+                        <td style="border: 1px solid black;">По классу </td>
+                        <td style ="border: 1px solid black;">@Model.acco.Where(entity => entity.ClassId == clas.Id ).Sum(entity => entity.IncomingBalanceActive)</td>
+                        <td style="border: 1px solid black;">@Model.acco.Where(entity => entity.ClassId == clas.Id ).Sum(entity => entity.InitialBalancePassive)</td>
+                        <td style="border: 1px solid black;">@Model.acco.Where(entity => entity.ClassId == clas.Id ).Sum(entity => entity.DebitTurnover)</td>
+                        <td style="border: 1px solid black;">@Model.acco.Where(entity => entity.ClassId == clas.Id ).Sum(entity => entity.CreditTurnover)</td>
+                        <td style="border: 1px solid black;">@Model.acco.Where(entity => entity.ClassId == clas.Id ).Sum(entity => entity.InitialBalanceActive)</td>
+                        <td style="border: 1px solid black;">@Model.acco.Where(entity => entity.ClassId == clas.Id ).Sum(entity => entity.InitialBalancePassive)</td>
+                </tr>
+            }
+            }
+            @{    /*вывод итогов по файлу*/
+            <tr>
+                    <td style="border: 1px solid black;">БАЛАНС</td>
+                    <td style="border: 1px solid black;">@Model.acco.Sum(entity => entity.IncomingBalanceActive)</td>
+                    <td style="border: 1px solid black;">@Model.acco.Sum(entity => entity.InitialBalancePassive)</td>
+                    <td style="border: 1px solid black;">@Model.acco.Sum(entity => entity.DebitTurnover)</td>
+                    <td style="border: 1px solid black;">@Model.acco.Sum(entity => entity.CreditTurnover)</td>
+                    <td style="border: 1px solid black;">@Model.acco.Sum(entity => entity.InitialBalanceActive)</td>
+                    <td style="border: 1px solid black;">@Model.acco.Sum(entity => entity.InitialBalancePassive)</td>
+            </tr>
+            }
+     </tbody>
+</table>
+}
+
+    
